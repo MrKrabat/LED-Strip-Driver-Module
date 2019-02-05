@@ -23,7 +23,7 @@ LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin) : _din(din), _cin(cin), _
     @param delay the clock delay in microseconds
 */
 /**************************************************************************/
-LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin, int8_t delay) : _din(din), _cin(cin), _delay(delay) {
+LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin, int16_t delay) : _din(din), _cin(cin), _delay(delay) {
     pinMode(din, OUTPUT);
     pinMode(cin, OUTPUT);
 }
@@ -100,6 +100,7 @@ void LEDStripDriver::senddata(uint32_t dx) {
         dx <<= 1;
         sendclock();
     }
+    sendzero();
 }
 
 /**************************************************************************/
