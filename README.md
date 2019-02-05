@@ -9,7 +9,7 @@ Example usage:
 ```c
 #include <LEDStripDriver.h>
 
-// use two avaiable GPIO pins from your board
+// use two available GPIO pins from your board
 // DIN=GPIO16, CIN=GPIO14 in this example
 LEDStripDriver led = LEDStripDriver(16, 14);
 
@@ -19,11 +19,13 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  led.setColorRGB(0, 255, 0); // green
+  led.setColor(255, 0, 0); // RGB
   delay(1000);
-  led.setColorHEX(0xFFFFFF); // white
+  led.setColor("#00FF00"); // String
   delay(1000);
-  led.setColorOff(); // off
+  led.setColor(0x0000FF); // HEX
+  delay(1000);
+  led.setColor(); // turn off
   delay(1000);
 }
 ```

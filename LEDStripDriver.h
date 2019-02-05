@@ -11,17 +11,19 @@ class LEDStripDriver {
         LEDStripDriver(int8_t din, int8_t cin, int8_t delay);
 
         // color manipulation
-        void setColorRGB(uint8_t red, uint8_t green, uint8_t blue);
-        void setColorHEX(uint32_t hex);
-        void setColorOff();
+        void setColor(uint8_t red, uint8_t green, uint8_t blue);
+        void setColor(uint32_t hex);
+        void setColor(String str);
+        void setColor();
 
     private:
         int8_t _din, _cin, _delay;
 
+        // private methods
+        uint8_t getColorCode(uint8_t color);
         void senddata(uint32_t dx);
         void sendzero();
         void sendclock();
-        uint8_t getColorCode(uint8_t color);
 };
 
 #endif

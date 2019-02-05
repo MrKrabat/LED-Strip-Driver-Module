@@ -28,7 +28,15 @@ LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin, int8_t delay) : _din(din)
     pinMode(cin, OUTPUT);
 }
 
-void LEDStripDriver::setColorRGB(uint8_t red, uint8_t green, uint8_t blue) {
+/**************************************************************************/
+/*!
+    @brief set color from r,g,b parameter
+    @param red amount of red color [0-255]
+    @param green amount of green color [0-255]
+    @param blue amount of blue color [0-255]
+*/
+/**************************************************************************/
+void LEDStripDriver::setColor(uint8_t red, uint8_t green, uint8_t blue) {
     uint32_t dx = 0;
     dx |= (uint32_t)0x03 << 30;
     dx |= (uint32_t)getColorCode(blue) << 28;
@@ -42,17 +50,45 @@ void LEDStripDriver::setColorRGB(uint8_t red, uint8_t green, uint8_t blue) {
     senddata(dx);
 }
 
-void LEDStripDriver::setColorHEX(uint32_t hex) {
+/**************************************************************************/
+/*!
+    @brief set color from hex parameter
+    @param hex hex number [0x000000-0xFFFFFF]
+*/
+/**************************************************************************/
+void LEDStripDriver::setColor(uint32_t hex) {
     uint8_t red   = (hex >> 16) & 0xFF;
     uint8_t green = (hex >> 8) & 0xFF;
     uint8_t blue  = (hex) & 0xFF;
-    setColorRGB(red, green, blue);
+    setColor(red, green, blue);
 }
 
-void LEDStripDriver::setColorOff() {
-    setColorRGB(0, 0, 0);
+/**************************************************************************/
+/*!
+    @brief set color from hex string
+    @param str string of hex color, e.g. "#00FF00"
+*/
+/**************************************************************************/
+void LEDStripDriver::setColor(String str) {
+    uint32_t hex = (uint32_t)strtol(&str[1], NULL, 16);
+    setColor(hex);
 }
 
+/**************************************************************************/
+/*!
+    @brief set color to off
+*/
+/**************************************************************************/
+void LEDStripDriver::setColor() {
+    setColor(0, 0, 0);
+}
+
+/**************************************************************************/
+/*!
+    @brief send data over data pin
+    @param dx data to transmitt
+*/
+/**************************************************************************/
 void LEDStripDriver::senddata(uint32_t dx) {
     sendzero();
     for (uint8_t i = 0; i < 32; i++) {
@@ -64,9 +100,13 @@ void LEDStripDriver::senddata(uint32_t dx) {
         dx <<= 1;
         sendclock();
     }
-    //sendzero();
 }
 
+/**************************************************************************/
+/*!
+    @brief send a sequence of zeros
+*/
+/**************************************************************************/
 void LEDStripDriver::sendzero() {
     for (uint8_t i = 0; i < 32; i++) {
         digitalWrite(_din, LOW);
@@ -74,6 +114,11 @@ void LEDStripDriver::sendzero() {
     }
 }
 
+/**************************************************************************/
+/*!
+    @brief send one clock impulse
+*/
+/**************************************************************************/
 void LEDStripDriver::sendclock() {
     digitalWrite(_cin, LOW);
     delayMicroseconds(_delay);
@@ -81,6 +126,11 @@ void LEDStripDriver::sendclock() {
     delayMicroseconds(_delay);
 }
 
+/**************************************************************************/
+/*!
+    @brief convert color to code
+*/
+/**************************************************************************/
 uint8_t LEDStripDriver::getColorCode(uint8_t color) {
     uint8_t tmp = 0;
     if ((color & 0x80) == 0) {

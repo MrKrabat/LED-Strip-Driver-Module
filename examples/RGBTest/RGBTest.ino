@@ -10,12 +10,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  led.setColorRGB(255, 0, 0);
+  led.setColor(255, 0, 0);
   delay(1000);
-  led.setColorRGB(0, 255, 0);
+  led.setColor("#00FF00");
   delay(1000);
-  led.setColorHEX(0x0000FF);
+  led.setColor(0x0000FF);
   delay(1000);
-  led.setColorOff();
+  led.setColor();
   delay(1000);
 }
