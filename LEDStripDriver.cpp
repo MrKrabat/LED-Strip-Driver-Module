@@ -10,7 +10,7 @@
     @param cin the clock pin to use
 */
 /**************************************************************************/
-LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin) : _din(din), _cin(cin), _delay(20) {
+LEDStripDriver::LEDStripDriver(uint8_t din, uint8_t cin) : _din(din), _cin(cin), _delay(20) {
     pinMode(din, OUTPUT);
     pinMode(cin, OUTPUT);
 }
@@ -23,7 +23,7 @@ LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin) : _din(din), _cin(cin), _
     @param delay the clock delay in microseconds
 */
 /**************************************************************************/
-LEDStripDriver::LEDStripDriver(int8_t din, int8_t cin, int16_t delay) : _din(din), _cin(cin), _delay(delay) {
+LEDStripDriver::LEDStripDriver(uint8_t din, uint8_t cin, uint16_t delay) : _din(din), _cin(cin), _delay(delay) {
     pinMode(din, OUTPUT);
     pinMode(cin, OUTPUT);
 }
